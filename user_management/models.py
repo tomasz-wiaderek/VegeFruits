@@ -5,9 +5,10 @@ from django.db import models
 
 
 class UserType(models.Model):
-    type = models.CharField(max_length=8, null=False, choices=[('admin', 'admin'),
-                                                               ('producer', 'producer'),
-                                                               ('customer', 'customer')])
+    types = [('admin', 'admin'),
+             ('producer', 'producer'),
+             ('customer', 'customer')]
+    type = models.CharField(max_length=8, null=False, choices=types)
 
     def __str__(self):
         return f'{self.pk}: {self.type}'
@@ -45,8 +46,8 @@ class District(models.Model):
 
 class UserLocation(models.Model):
     zip_code = models.CharField(max_length=6)
-    voivodship = models.ForeignKey(Voivodship, on_delete=models.CASCADE)
-    district = models.ForeignKey(District, on_delete=models.CASCADE)
+    voivodship = models.ForeignKey(Voivodship, on_delete=models.SET_DEFAULT, default='Not chosen')
+    district = models.ForeignKey(District, on_delete=models.SET_DEFAULT, default='Not chosen')
     city = models.CharField(max_length=100)
     address = models.CharField(max_length=250)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
