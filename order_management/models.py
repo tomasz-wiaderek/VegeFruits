@@ -14,6 +14,7 @@ class DeliveryLocation(models.Model):
     zip_code = models.CharField(max_length=6)
     city = models.CharField(max_length=100)
     address = models.CharField(max_length=250)
+    phone = models.CharField(max_length=12)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
 
