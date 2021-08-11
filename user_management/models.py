@@ -5,9 +5,9 @@ from django.db import models
 
 
 class UserType(models.Model):
-    type = models.CharField(max_length=8, choices=[('admin', 'admin'),
-                                                   ('producer', 'producer'),
-                                                   ('customer', 'customer')])
+    type = models.CharField(max_length=8, null=False, choices=[('admin', 'admin'),
+                                                               ('producer', 'producer'),
+                                                               ('customer', 'customer')])
 
     def __str__(self):
         return f'{self.pk}: {self.type}'
