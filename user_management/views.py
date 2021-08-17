@@ -1,9 +1,9 @@
 from django.shortcuts import render
-
+from django.urls import reverse
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
-from .models import User
-from .forms import UserModelForm
+from .models import User, UserLocation
+from .forms import UserModelForm, UserLocationModelForm
 # Create your views here.
 
 
@@ -22,3 +22,29 @@ class UserCreateView(CreateView):
     template_name = 'user/user_create.html'
     queryset = User.objects.all()
     form_class = UserModelForm
+
+
+class UserUpdateView(UpdateView):
+    template_name = 'user/user_create.html'
+    queryset = User.objects.all()
+    form_class = UserModelForm
+
+
+class UserDeleteView(DeleteView):
+    template_name = 'user/user_delete.html'
+    queryset = User.objects.all()
+
+    def get_success_url(self):
+        return reverse('user:users-list')
+
+
+class UserLocationCreateView(CreateView):
+    template_name = 'user_location/ul_create.html'
+    queryset = UserLocation.objects.all()
+    form_class = UserLocationModelForm
+
+
+class UserLocationUpdateView(UpdateView):
+    template_name = 'user_location/ul_create.html'
+    queryset = UserLocation.objects.all()
+    form_class = UserLocationModelForm

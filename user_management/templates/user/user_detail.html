@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 
 <p>{{ object.type|capfirst }}</p>
 <h1>{{ object.name }}</h1>
@@ -5,3 +9,5 @@
 <p>{{ object.additional_info.phone }}</p>
 <p>Description: {{ object.additional_info.additional_desc }}</p>
 <p>Delivery: {{ object.additional_info.delivery_available }}</p>
+
+{% endblock %}
