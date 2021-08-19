@@ -1,47 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
-from .models import User, UserLocation
-from .forms import UserModelForm, UserLocationModelForm
-# Create your views here.
+from django.contrib import messages
 
-
-# User class views
-
-class UserDetailView(DetailView):
-    template_name = 'user/user_detail.html'
-    queryset = User.objects.all()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data()
-        context['location'] = UserLocation.objects.get(user=context['object'])
-        return context
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from .models import UserLocation
+from .forms import UserRegisterForm, UserLocationModelForm
 
 
-class UserListView(ListView):
-    template_name = 'user/user_list.html'
-    queryset = User.objects.all()
-
-
-class UserCreateView(CreateView):
-    template_name = 'user/user_create.html'
-    queryset = User.objects.all()
-    form_class = UserModelForm
-
-
-class UserUpdateView(UpdateView):
-    template_name = 'user/user_create.html'
-    queryset = User.objects.all()
-    form_class = UserModelForm
-
-
-class UserDeleteView(DeleteView):
-    template_name = 'user/user_delete.html'
-    queryset = User.objects.all()
-
-    def get_success_url(self):
-        return reverse('user_man:users-list')
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            messages.success(request, f'Account created for {username}')
+            return redirect('engine:page-home')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'user/register.html', context={'form': form})
 
 
 # UserLocation class views
