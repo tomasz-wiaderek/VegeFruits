@@ -5,13 +5,19 @@
 
 <p>{{ object.type|capfirst }}</p>
 <h1>{{ object.name }}</h1>
-<p>{{ object.email }}</p>
-<p>{{ object.additional_info.phone }}</p>
+
 <p>Description: {{ object.additional_info.additional_desc }}</p>
-<p>Delivery: {{ object.additional_info.delivery_available }}</p>
+{% if object.additional_info.delivery_available %}
+    <p>Delivery: Available</p>
+{% else %}
+    <p>Delivery: Unavailable</p>
+{% endif %}
 
 <h4>Location:</h4>
-<p>{{ location.zip_code }} {{ location.city }}</p>
-<p>{{ location.address }}</p>
+{{ location }}
+
+<h4>Contact:</h4>
+<p>{{ object.email }}</p>
+<p>{{ object.additional_info.phone }}</p>
 
 {% endblock %}

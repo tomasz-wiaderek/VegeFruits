@@ -41,7 +41,7 @@ class UserDeleteView(DeleteView):
     queryset = User.objects.all()
 
     def get_success_url(self):
-        return reverse('user:users-list')
+        return reverse('user_man:users-list')
 
 
 # UserLocation class views
@@ -63,7 +63,7 @@ class UserLocationDeleteView(DeleteView):
     queryset = UserLocation.objects.all()
 
     def get_success_url(self):
-        return reverse('user:users-list')
+        return reverse('user_man:users-list')
 
 
 class UserLocationDetailView(DetailView):
