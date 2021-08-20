@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
-
-# Create your models here.
+from django.contrib.auth.models import User
 
 
 class UserType(models.Model):
@@ -24,17 +23,17 @@ class UserAdditionalInfo(models.Model):
         return f'Addition info for {user}'
 
 
-class User(models.Model):
-    name = models.CharField(max_length=250)
-    email = models.EmailField(max_length=320)
-    type = models.ForeignKey(UserType, on_delete=models.CASCADE)
-    additional_info = models.ForeignKey(UserAdditionalInfo, on_delete=models.CASCADE, blank=True, null=True)
-
-    def __str__(self):
-        return f'{self.pk}: {self.type} {self.name}'
-
-    def get_absolute_url(self):
-        return reverse('user_man:user-detail', kwargs={'pk': self.pk})
+# class User(models.Model):
+#     name = models.CharField(max_length=250)
+#     email = models.EmailField(max_length=320)
+#     type = models.ForeignKey(UserType, on_delete=models.CASCADE)
+#     additional_info = models.ForeignKey(UserAdditionalInfo, on_delete=models.CASCADE, blank=True, null=True)
+#
+#     def __str__(self):
+#         return f'{self.pk}: {self.type} {self.name}'
+#
+#     def get_absolute_url(self):
+#         return reverse('user_man:user-detail', kwargs={'pk': self.pk})
 
 
 class Voivodship(models.Model):
@@ -61,3 +60,11 @@ class UserLocation(models.Model):
 
     def __str__(self):
         return f'{self.zip_code} {self.city} {self.address}'
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+
+    def __str__(self):
+        return f"{self.user.username}'s profile"

@@ -18,7 +18,7 @@ class Product(models.Model):
 
 
 class Inventory(models.Model):
-    user = models.ForeignKey('user_management.User', on_delete=models.CASCADE)
+    # user = models.ForeignKey('user_management.User', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
     quantity = models.IntegerField()

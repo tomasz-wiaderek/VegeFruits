@@ -1,11 +1,9 @@
 from django.contrib import admin
-from .models import User, UserType, UserLocation, UserAdditionalInfo, District, Voivodship
+from .models import Profile, UserType, UserLocation, UserAdditionalInfo, Voivodship, District
 
-# Register your models here.
-
+admin.site.register(Profile)
 admin.site.register(UserType)
-admin.site.register(UserAdditionalInfo)
 admin.site.register(UserLocation)
-admin.site.register(User)
-admin.site.register(District)
+admin.site.register(UserAdditionalInfo)
 admin.site.register(Voivodship)
+admin.site.register(District)
