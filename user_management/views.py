@@ -2,11 +2,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from .models import UserLocation
 from .forms import UserRegisterForm, UserLocationModelForm
 
+
+# User views
 
 def register(request):
     if request.method == 'POST':
@@ -15,10 +18,15 @@ def register(request):
             form.save()
             username = form.cleaned_data['username']
             messages.success(request, f'Account created for {username}')
-            return redirect('engine:page-home')
+            return redirect('user_man:login')
     else:
         form = UserRegisterForm()
     return render(request, 'user/register.html', context={'form': form})
+
+
+@login_required
+def profile(request):
+    return render(request, 'user/profile.html', context={})
 
 
 # UserLocation class views
