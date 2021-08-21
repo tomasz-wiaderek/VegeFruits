@@ -26,6 +26,11 @@ def register(request):
 
 @login_required
 def profile(request):
+    return render(request, 'user/profile.html', context={})
+
+
+@login_required
+def profile_update(request):
     if request.method == 'POST':
         user_update_form = UserUpdateForm(request.POST, instance=request.user)
         profile_update_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -41,7 +46,7 @@ def profile(request):
         'user_update_form': user_update_form,
         'profile_update_form': profile_update_form
     }
-    return render(request, 'user/profile.html', context=context)
+    return render(request, 'user/profile_update.html', context=context)
 
 
 # UserLocation class views
