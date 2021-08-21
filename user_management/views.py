@@ -5,8 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
-from .models import UserLocation
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserLocationModelForm
+from .models import Profile, ProfileLocation, ProfileAdditionalInfo
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, ProfileLocationModelForm
 
 
 # User views
@@ -26,7 +26,16 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request, 'user/profile.html', context={})
+    user_profile = request.user.profile
+    location = ProfileLocation.objects.get(profile=user_profile)
+    info = ProfileAdditionalInfo.objects.get(profile=user_profile)
+    context = {
+        'user': request.user,
+        'user_profile': user_profile,
+        'location': location,
+        'info': info
+    }
+    return render(request, 'user/profile.html', context=context)
 
 
 @login_required
@@ -49,28 +58,28 @@ def profile_update(request):
     return render(request, 'user/profile_update.html', context=context)
 
 
-# UserLocation class views
+# ProfileLocation class views
 
-class UserLocationCreateView(CreateView):
-    template_name = 'user_location/ul_create.html'
-    queryset = UserLocation.objects.all()
-    form_class = UserLocationModelForm
-
-
-class UserLocationUpdateView(UpdateView):
-    template_name = 'user_location/ul_create.html'
-    queryset = UserLocation.objects.all()
-    form_class = UserLocationModelForm
+class ProfileLocationCreateView(CreateView):
+    template_name = 'profile_location/pl_create.html'
+    queryset = ProfileLocation.objects.all()
+    form_class = ProfileLocationModelForm
 
 
-class UserLocationDeleteView(DeleteView):
-    template_name = 'user_location/ul_delete.html'
-    queryset = UserLocation.objects.all()
+class ProfileLocationUpdateView(UpdateView):
+    template_name = 'profile_location/pl_create.html'
+    queryset = ProfileLocation.objects.all()
+    form_class = ProfileLocationModelForm
+
+
+class ProfileLocationDeleteView(DeleteView):
+    template_name = 'profile_location/pl_delete.html'
+    queryset = ProfileLocation.objects.all()
 
     def get_success_url(self):
-        return reverse('user_man:users-list')
+        return reverse('engine:page-home')
 
 
-class UserLocationDetailView(DetailView):
-    template_name = 'user_location/ul_detail.html'
-    queryset = UserLocation.objects.all()
+class ProfileLocationDetailView(DetailView):
+    template_name = 'profile_location/pl_detail.html'
+    queryset = ProfileLocation.objects.all()

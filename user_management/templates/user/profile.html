@@ -6,10 +6,23 @@
       <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
         <div class="media-body">
-          <a class="text-secondary" href="{% url 'user_man:profile-update' %}">Update profile</a>
           <h2 class="account-heading">{{ user.username }}</h2>
-          <p class="text-secondary">{{ user.email }}</p>
+          <a class="text-secondary" href="{% url 'user_man:profile-update' %}">Update general info</a>
         </div>
       </div>
+    </div>
+    <div class="content-section">
+        <div class="media">
+            <h4>About You</h4>
+            <p class="text-secondary">{{ info.additional_desc }}</p>
+        </div>
+    </div>
+    <div class="content-section">
+        <div class="media">
+            <h4>Your details:</h4>
+            <p class="text-secondary">{{ location }}</p>
+            <p class="text-secondary">{{ user.email }}</p>
+            <p class="text-secondary">{{ info.phone }}</p>
+        </div>
     </div>
 {% endblock content%}
