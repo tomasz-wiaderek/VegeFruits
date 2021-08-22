@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.urls import reverse
 from django.contrib.auth.models import User
 from PIL import Image
 
@@ -16,8 +16,13 @@ class ProfileType(models.Model):
 
 
 class Profile(models.Model):
+    types = [
+             ('producer', 'Producer'),
+             ('customer', 'Customer')
+    ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    profile_type = models.CharField(max_length=8, choices=types, default='customer')
 
     def __str__(self):
         return f"{self.user.username}'s profile"
@@ -36,6 +41,9 @@ class ProfileAdditionalInfo(models.Model):
     additional_desc = models.TextField(blank=True)
     delivery_available = models.BooleanField(default=False)
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse('user_man:profile')
 
 
 class Voivodship(models.Model):
@@ -62,3 +70,6 @@ class ProfileLocation(models.Model):
 
     def __str__(self):
         return f'{self.zip_code} {self.city}, {self.address}'
+
+    def get_absolute_url(self):
+        return reverse('user_man:profile')

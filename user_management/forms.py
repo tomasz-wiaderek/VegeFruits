@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, ProfileLocation
+from .models import Profile, ProfileLocation, ProfileAdditionalInfo
 
 
 class UserRegisterForm(UserCreationForm):
@@ -34,7 +34,8 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = [
             'image',
-        ]
+            'profile_type'
+            ]
 
 
 class ProfileLocationModelForm(forms.ModelForm):
@@ -57,4 +58,15 @@ class ProfileLocationModelForm(forms.ModelForm):
             'district',
             'city',
             'address'
+        ]
+
+
+class ProfileAdditionalInfoModelForm(forms.ModelForm):
+
+    class Meta:
+        model = ProfileAdditionalInfo
+        fields = [
+            'phone',
+            'additional_desc',
+            'delivery_available',
         ]
