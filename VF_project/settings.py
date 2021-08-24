@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'user_management.apps.UserManagementConfig',
     'engine.apps.EngineConfig',
+    'inventory.apps.InventoryConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,8 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'product_management',
-    'order_management',
 ]
 
 MIDDLEWARE = [
