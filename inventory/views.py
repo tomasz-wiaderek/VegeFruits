@@ -1,22 +1,12 @@
-from django.shortcuts import render, reverse
-from django.views.generic import CreateView, UpdateView
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import reverse, get_object_or_404
+from django.views.generic import CreateView, UpdateView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from user_management.models import Profile
 from .models import Inventory
 from .forms import InventoryModelForm
 
 
-@login_required()
-def list_profiles_inventories(request):
-    queryset = Inventory.objects.filter(profile=request.user.profile)
-    context = {
-        'object_list': queryset,
-        'profile': request.user.profile
-    }
-    return render(request, 'inventory/myinventory.html', context=context)
-
-
-class InventoryCreateView(LoginRequiredMixin, CreateView):
+class InventoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Inventory
     form_class = InventoryModelForm
     template_name = 'inventory/update.html'
@@ -28,11 +18,51 @@ class InventoryCreateView(LoginRequiredMixin, CreateView):
         form.instance.profile = self.request.user.profile
         return super().form_valid(form)
 
+    def test_func(self):
+        inventory = self.get_object()
+        return self.request.user == inventory.profile.user
 
-class InventoryUpdateView(LoginRequiredMixin, UpdateView):
+
+class InventoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Inventory
     form_class = InventoryModelForm
     template_name = 'inventory/update.html'
 
     def get_success_url(self):
         return reverse('inventory:myinventory')
+
+    def test_func(self):
+        inventory = self.get_object()
+        return self.request.user == inventory.profile.user
+
+
+class InventoryListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = Inventory
+    template_name = 'inventory/my_inv.html'
+
+    def get_queryset(self):
+        profile = get_object_or_404(Profile, user=self.request.user)
+        return Inventory.objects.filter(profile=profile)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = self.request.user.profile
+        return context
+
+    def test_func(self):
+        inventory = self.get_queryset()
+        return self.request.user == inventory[0].profile.user
+
+
+class SelectedProducerInventoryListView(LoginRequiredMixin, ListView):
+    model = Inventory
+    template_name = 'inventory/selected_inv.html'
+
+    def get_queryset(self):
+        profile = get_object_or_404(Profile, pk=self.kwargs.get('pk'))
+        return Inventory.objects.filter(profile=profile)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = get_object_or_404(Profile, pk=self.kwargs.get('pk'))
+        return context
