@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>Welcome to VegeFruits</h1>
+{% endblock content %}
+
+{% block search %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom-mb-4">Search conditions:</legend>
+            {{ filer.form }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Search</button>
+        </div>
+    </form>
+    </div>
+{% endblock search %}

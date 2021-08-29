@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a class="text-secondary" href="{% url 'engine:home' %}">New search</a>
+
+    <h1>Matching producers</h1>
+
+        {% for profile in profiles %}
+
+        <a class="text-secondary" href="{% url 'inventory:selected-producer-inventory' profile.pk %}">
+        <div class="content-section" >
+            <p><img class="rounded-circle account-img" src="{{ profile.image.url }}"> {{ profile.user.username }}</p>
+            <p>{{ profile.profilelocation }}</p>
+<!--            <a class="text-secondary" href="{% url 'inventory:selected-producer-inventory' profile.pk %}">Visit</a>-->
+        </div>
+        </a>
+
+        {% empty %}
+
+            <p class="text-secondary">No producers were found.</p>
+
+        {% endfor %}
+
+{% endblock %}

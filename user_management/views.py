@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
 from django.http import Http404
 
 from django.contrib import messages
@@ -8,8 +7,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic import CreateView, UpdateView
 from .models import ProfileLocation, ProfileAdditionalInfo
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, \
-    ProfileLocationModelForm, ProfileAdditionalInfoModelForm
+from .forms import (
+    UserRegisterForm,
+    UserUpdateForm,
+    ProfileUpdateForm,
+    ProfileLocationModelForm,
+    ProfileAdditionalInfoModelForm
+)
 
 
 # User and Profile views

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'inventory.apps.InventoryConfig',
     'order.apps.OrderConfig',
     'crispy_forms',
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -134,5 +135,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'engine:page-home'
+LOGIN_REDIRECT_URL = 'engine:home'
 LOGIN_URL = 'user_man:login'

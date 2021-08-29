@@ -6,7 +6,7 @@ from .models import Inventory
 from .forms import InventoryModelForm
 
 
-class InventoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class InventoryCreateView(LoginRequiredMixin, CreateView):
     model = Inventory
     form_class = InventoryModelForm
     template_name = 'inventory/update.html'
@@ -17,10 +17,6 @@ class InventoryCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def form_valid(self, form):
         form.instance.profile = self.request.user.profile
         return super().form_valid(form)
-
-    def test_func(self):
-        inventory = self.get_object()
-        return self.request.user == inventory.profile.user
 
 
 class InventoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -36,7 +32,7 @@ class InventoryUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.request.user == inventory.profile.user
 
 
-class InventoryListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class InventoryListView(LoginRequiredMixin, ListView):
     model = Inventory
     template_name = 'inventory/my_inv.html'
 
@@ -48,10 +44,6 @@ class InventoryListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['profile'] = self.request.user.profile
         return context
-
-    def test_func(self):
-        inventory = self.get_queryset()
-        return self.request.user == inventory[0].profile.user
 
 
 class SelectedProducerInventoryListView(LoginRequiredMixin, ListView):
