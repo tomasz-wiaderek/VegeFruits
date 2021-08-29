@@ -1,6 +1,6 @@
 from django.db import models
-from django.conf import settings
 from inventory.models import Inventory
+from django.contrib.auth.models import User
 
 
 class Order(models.Model):
@@ -12,13 +12,13 @@ class Order(models.Model):
         ('del', 'delivered'),
         ('can', 'cancelled')
     ]
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=3, choices=statuses, default='unposted')
     with_delivery = models.BooleanField(default=False)
     add_notes = models.CharField(max_length=250, blank=True)
     created_date = models.DateField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
-    predicted_delivery = models.DateField()
+    predicted_delivery = models.DateField(blank=True, null=True)
 
 
 class DeliveryLocation(models.Model):
@@ -33,5 +33,5 @@ class DeliveryLocation(models.Model):
 
 class OrderLine(models.Model):
     inventory = models.ForeignKey(Inventory, on_delete=models.PROTECT)
-    quantity = models.DecimalField(max_digits=8, decimal_places=1)
+    quantity = models.DecimalField(max_digits=8, decimal_places=2)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
