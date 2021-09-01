@@ -1,6 +1,7 @@
 from django.db import models
 from inventory.models import Inventory
 from django.contrib.auth.models import User
+from django.shortcuts import reverse
 
 
 class Order(models.Model):

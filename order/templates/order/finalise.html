@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <h1>Order summary:</h1>
+    <p>Order no: {{ order.pk }} </p>
+    <ul>
+        {% for orderline in orderlines %}
+            <li>
+                {{ orderline.inventory.product }}:
+                quantity of {{ orderline.quantity }}
+                {{ orderline.inventory.unit }},
+                price {{ orderline.inventory.price }} PLN
+            </li>
+        {% endfor %}
+    </ul>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Send order</button>
+        </div>
+    </form>
+
+{% endblock %}
