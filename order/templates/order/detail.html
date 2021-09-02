@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Order no: {{ object.pk }}</h1>
+    <p class="text-secondary">Status: {{ object.status }}</p>
+    <p class="text-secondary">Status: {{ object.created_date }}</p>
+    <p class="text-secondary">Customer: {{ object.customer }}</p>
+    <p class="text-secondary">{{ object.add_notes }}</p>
+
+{% endblock %}

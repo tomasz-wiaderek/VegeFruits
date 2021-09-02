@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>List of products for: {{ profile }}</h1>
+    <p class="text-secondary">{{ profile }}</p>
+    <h1>My products:</h1>
     <a class="text-secondary" href="{% url 'inventory:create' %}">Add product</a>
     <ul>
         {% for object in object_list %}
-            <li><a class="text-secondary" href="{% url 'inventory:update' object.pk %}">Update</a> {{ object.product }} {{ object.unit }} {{ object.price }}</li>
+            <li>
+                <a class="text-secondary" href="{% url 'inventory:update' object.pk %}">Update</a> {{ object.product }} available quantity: {{ object.stock_quantity }} {{ object.unit }}.<br>
+                Price: {{ object.price }} PLN / {{ object.unit }}.
+            </li>
         {% empty %}
             <p class="text-secondary">You don't have any product in your inventory yet.</p>
         {% endfor %}

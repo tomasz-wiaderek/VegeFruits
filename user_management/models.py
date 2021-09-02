@@ -25,7 +25,7 @@ class Profile(models.Model):
     profile_type = models.CharField(max_length=8, choices=types, default='customer')
 
     def __str__(self):
-        return f"{self.user.username}'s profile"
+        return f"{self.user.username}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

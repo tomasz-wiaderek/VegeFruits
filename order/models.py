@@ -21,6 +21,9 @@ class Order(models.Model):
     last_modified = models.DateField(auto_now=True)
     predicted_delivery = models.DateField(blank=True, null=True)
 
+    def __str__(self):
+        return f'{self.pk}'
+
 
 class DeliveryLocation(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

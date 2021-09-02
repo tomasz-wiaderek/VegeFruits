@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>List of products for: {{ profile }}</h1>
+    <h1>Products of {{ profile }}</h1>
     {% if user != profile.user %}
         <a class="text-secondary" href="{% url 'order:create' profile.pk %}">Make an order</a>
     {% endif %}
     <ul>
         {% for object in object_list %}
-            <li>{{ object.product }} {{ object.unit }} {{ object.price }}</li>
+            <li>
+                {{ object.product }} available quantity: {{ object.stock_quantity }} {{ object.unit }}.<br>
+                Price: {{ object.price }} PLN / {{ object.unit }}.
+            </li>
         {% empty %}
             <p class="text-secondary">No products to display.</p>
         {% endfor %}

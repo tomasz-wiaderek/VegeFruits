@@ -31,6 +31,7 @@
                 {% if user.profile.profile_type == 'producer' %}
                   <a class="nav-item nav-link" href="{% url 'inventory:myinventory' %}">My inventory</a>
                 {% endif %}
+                <a class="nav-item nav-link" href="{% url 'order:myorders' %}">My orders</a>
                 <a class="nav-item nav-link" href="{% url 'user_man:profile' %}">Profile</a>
                 <a class="nav-item nav-link" href="{% url 'user_man:logout' %}">Logout</a>
               {% else %}
