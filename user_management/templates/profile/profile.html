@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+          <a class="text-secondary" href="{% url 'user_man:profile-update' %}">Update general info</a>
+        </div>
+      </div>
+    </div>
+    <div class="content-section">
+        <div class="media">
+            <h4>About You</h4>
+            {% if info.additional_desc %}
+                <p class="text-secondary">{{ info.additional_desc }}</p>
+                <a class="text-secondary" href="{% url 'user_man:info-update' info.pk %}">Update</a>
+            {% else %}
+                <p class="text-secondary">{{ info}}</p>
+                <a class="text-secondary" href="{% url 'user_man:info-create' %}">Set Up</a>
+            {% endif %}
+            </div>
+    </div>
+    <div class="content-section">
+        <div class="media">
+            <h4>Your details:</h4>
+            {% if location == 'Location was not specified.' %}
+                <p class="text-secondary">{{ location }}</p>
+                <a class="text-secondary" href="{% url 'user_man:location-create' %}">Set Up</a>
+            {% else %}
+                <p class="text-secondary">{{ location }}</p>
+                <p class="text-secondary">{{ info.phone }}</p>
+                <a class="text-secondary" href="{% url 'user_man:location-update' location.pk %}">Update</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content%}
