@@ -10,7 +10,7 @@ class Unit(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=250, unique=True)
+    name = models.CharField(max_length=256, unique=True)
 
     def __str__(self):
         return self.name
@@ -26,7 +26,7 @@ class Inventory(models.Model):
     min_order = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     max_order = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     pick_yourself = models.BooleanField(default=True)
-    additional_desc = models.CharField(max_length=250, blank=True)
+    additional_desc = models.CharField(max_length=256, blank=True)
 
     def __str__(self):
         return f"{self.profile}'s inventory of product {self.product}"

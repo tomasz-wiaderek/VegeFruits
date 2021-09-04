@@ -16,7 +16,7 @@ class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=3, choices=statuses, default='unposted')
     with_delivery = models.BooleanField(default=False)
-    add_notes = models.CharField(max_length=250, blank=True)
+    add_notes = models.CharField(max_length=256, blank=True)
     created_date = models.DateField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
     predicted_delivery = models.DateField(blank=True, null=True)
@@ -28,10 +28,10 @@ class Order(models.Model):
 class DeliveryLocation(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     zip_code = models.CharField(max_length=6)
-    city = models.CharField(max_length=100)
-    address = models.CharField(max_length=250)
-    first_name = models.CharField(max_length=250)
-    last_name = models.CharField(max_length=250)
+    city = models.CharField(max_length=124)
+    address = models.CharField(max_length=256)
+    first_name = models.CharField(max_length=256)
+    last_name = models.CharField(max_length=256)
     phone = models.CharField(max_length=12)
 
 

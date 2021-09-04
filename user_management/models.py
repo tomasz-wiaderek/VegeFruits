@@ -4,17 +4,6 @@ from django.contrib.auth.models import User
 from PIL import Image
 
 
-class ProfileType(models.Model):
-    types = [
-             ('producer', 'Producer'),
-             ('customer', 'Customer')
-    ]
-    type = models.CharField(max_length=8, choices=types)
-
-    def __str__(self):
-        return self.type
-
-
 class Profile(models.Model):
     types = [
              ('producer', 'Producer'),
@@ -47,14 +36,14 @@ class ProfileAdditionalInfo(models.Model):
 
 
 class Voivodship(models.Model):
-    name = models.CharField(max_length=18)
+    name = models.CharField(max_length=64)
 
     def __str__(self):
         return f'{self.name}'
 
 
 class District(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=64)
 
     def __str__(self):
         return f'{self.name}'
@@ -64,8 +53,8 @@ class ProfileLocation(models.Model):
     zip_code = models.CharField(max_length=6)
     voivodship = models.ForeignKey(Voivodship, on_delete=models.PROTECT)
     district = models.ForeignKey(District, on_delete=models.PROTECT)
-    city = models.CharField(max_length=100)
-    address = models.CharField(max_length=250)
+    city = models.CharField(max_length=128)
+    address = models.CharField(max_length=256)
     profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
 
     def __str__(self):

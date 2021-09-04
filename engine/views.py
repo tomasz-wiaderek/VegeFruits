@@ -21,12 +21,11 @@ def home_search(request):
             queryset = get_list_or_404(Profile, profile_type='producer',
                                        inventory__product__name__icontains=form.cleaned_data['product_name'],
                                        user__username__icontains=form.cleaned_data['producer_name'],
-                                       profilelocation__voivodship__in=validate_location(Voivodship, form.cleaned_data['voivodship']),
-                                       profilelocation__district__in=validate_location(District, form.cleaned_data['district']),
-                                       profilelocation__city__icontains=form.cleaned_data['city'],
+                                       # profilelocation__voivodship=form.cleaned_data['voivodship'],
+                                       # profilelocation__district=form.cleaned_data['district'],
+                                       # profilelocation__city__iexact=form.cleaned_data['city'],
                                        # profileadditionalinfo__delivery_available=form.cleaned_data['delivery_available']
                                        )
-            print(queryset)
             context = {
                 'profiles': set(queryset),
                 }
