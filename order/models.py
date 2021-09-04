@@ -1,20 +1,19 @@
 from django.db import models
 from inventory.models import Inventory
 from django.contrib.auth.models import User
-from django.shortcuts import reverse
 
 
 class Order(models.Model):
     statuses = [
-        ('unp', 'unposted'),
-        ('unc', 'unconfirmed'),
-        ('con', 'confirmed'),
-        ('rej', 'rejected'),
-        ('del', 'delivered'),
-        ('can', 'cancelled')
+        ('unposted', 'unposted'),
+        ('unconfirmed', 'unconfirmed'),
+        ('confirmed', 'confirmed'),
+        ('rejected', 'rejected'),
+        ('delivered', 'delivered'),
+        ('cancelled', 'cancelled')
     ]
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=3, choices=statuses, default='unposted')
+    status = models.CharField(max_length=11, choices=statuses, default='unposted')
     with_delivery = models.BooleanField(default=False)
     add_notes = models.CharField(max_length=256, blank=True)
     created_date = models.DateField(auto_now_add=True)
@@ -22,7 +21,7 @@ class Order(models.Model):
     predicted_delivery = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.pk}'
+        return f'Order no: {self.pk}'
 
 
 class DeliveryLocation(models.Model):

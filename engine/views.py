@@ -23,7 +23,7 @@ def home_search(request):
                                        user__username__icontains=form.cleaned_data['producer_name'],
                                        # profilelocation__voivodship=form.cleaned_data['voivodship'],
                                        # profilelocation__district=form.cleaned_data['district'],
-                                       # profilelocation__city__iexact=form.cleaned_data['city'],
+                                       profilelocation__city__icontains=form.cleaned_data['city'],
                                        # profileadditionalinfo__delivery_available=form.cleaned_data['delivery_available']
                                        )
             context = {

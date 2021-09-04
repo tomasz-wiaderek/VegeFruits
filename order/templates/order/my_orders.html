@@ -1,15 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p class="text-secondary">{{ profile }}</p>
-    <h1>My orders:</h1>
-    <ul>
-        {% for object in object_list %}
-            <li>
-                <a class="text-secondary" href="{% url 'order:detail' object.pk %}">See details: </a> {{ object }}
-            </li>
-        {% empty %}
-            <p class="text-secondary">You don't have any orders yet.</p>
-        {% endfor %}
-    </ul>
+    <div class="content-section">
+      <div class="media">
+        <div class="media-body">
+            <h1>My orders</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="media">
+        <div class="media-body">
+          <ul>
+            {% for object in object_list %}
+                <li>
+                    <a class="text-secondary" href="{% url 'order:detail' object.pk %}">See details </a>
+                    {{ object.status|title }} {{ object|lower }}
+                </li>
+            {% empty %}
+                <p class="text-secondary">You don't have any orders yet.</p>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
 {% endblock %}

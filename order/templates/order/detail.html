@@ -2,9 +2,26 @@
 
 {% block content %}
     <h1>Order no: {{ object.pk }}</h1>
-    <p class="text-secondary">Status: {{ object.status }}</p>
-    <p class="text-secondary">Status: {{ object.created_date }}</p>
-    <p class="text-secondary">Customer: {{ object.customer }}</p>
-    <p class="text-secondary">{{ object.add_notes }}</p>
 
+    <p class="text-secondary">Status: {{ object.status }}</p>
+    <p class="text-secondary">Created on: {{ object.created_date }}</p>
+    <p class="text-secondary">Modified on: {{ object.last_modified }}</p>
+    {% if user.profile.profile_type == 'producer' %}
+        <p class="text-secondary">Customer: {{ object.customer }}</p>
+    {% endif %}
+    <p class="text-secondary">{{ object.add_notes }}</p>
+    <ul>
+        {% for orderline in orderlines %}
+        <li>
+            {{ orderline.inventory.product }}<br>
+            {{ orderline.quantity }}
+            {{ orderline.inventory.unit }}<br>
+            Price: {{ orderline.inventory.price }} / {{ orderline.inventory.unit }}
+        </li>
+        {% endfor %}
+    </ul>
+    <p></p>
+    {% if user.profile.profile_type == 'producer' %}
+        <a class="text-secondary" href="#">Confirm</a>  <a class="text-secondary" href="#">Reject</a>
+    {% endif %}
 {% endblock %}
