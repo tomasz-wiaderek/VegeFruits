@@ -12,8 +12,10 @@ class MyOrdersListView(LoginRequiredMixin, ListView):
     template_name = 'order/my_orders.html'
 
     def get_queryset(self):
+        """Return all Orders for current user that are not with 'unposted' status."""
         profile = Profile.objects.get(user=self.request.user)
-        return set(Order.objects.filter(orderline__inventory__profile=profile))
+        queryset = set(Order.objects.filter(orderline__inventory__profile=profile).exclude(status='unposted'))
+        return queryset
 
 
 class OrderDetailView(DetailView):
@@ -55,7 +57,7 @@ def finalise_order(request, pk):
     current_order = Order.objects.get(pk=pk)
     orderlines = OrderLine.objects.filter(order=current_order)
     if request.method == 'POST':
-        current_order.status = 'unconfirmed'
+        current_order.status = 'unc'
         current_order.save()
         return redirect('/')
     context = {

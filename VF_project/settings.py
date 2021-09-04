@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'inventory.apps.InventoryConfig',
     'order.apps.OrderConfig',
     'crispy_forms',
-    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
